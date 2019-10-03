@@ -28,6 +28,10 @@ class SnakeEnv(gym.Env):
         self.snake_heading = None
         self.snake_body = None
 
+        # render
+        self.screen = None
+
+
     def step(self, action):
         action = 1 if action>1 else -1 if action<-1 else action
         # action = max(min(action, 1), -1)
@@ -65,7 +69,7 @@ class SnakeEnv(gym.Env):
 
         self.snake_heading = self.directions[self.direction_pointer]
         self.snake_body = collections.deque([self.head_position])
-        self.grid[self.head_position[0]][self.head_position[1]] = 1
+        self.grid[self.head_position[0]][self.head_position[1]] = 1.
         for i in range(1, self.initial_length):
             y, x = yx = self.head_position + i * self.snake_heading
             self.snake_body.append(yx)
@@ -76,16 +80,15 @@ class SnakeEnv(gym.Env):
         return self.grid
 
     def render(self, mode='human', close=False):
-        pygame.init()
-        self.size = self.width, self.height = 600, 600
-        self.rect_width, self.rect_height = tuple(self.size / np.array(list(self.grid_shape)))
-        self.screen = None
         if self.screen is None:
+            pygame.init()
+            self.size = self.width, self.height = 600, 600
+            self.rect_width, self.rect_height = tuple(self.size / np.array(list(self.grid_shape)))
             self.screen = pygame.display.set_mode(self.size)
 
         pygame.draw.rect(self.screen, (0, 128, 255), pygame.Rect(0, 0, self.width, self.height))
 
-        xs, ys = np.where(self.grid != 0)
+        xs, ys = np.where(self.grid != 0.)
         for y, x in zip(xs, ys):
             v = self.grid[y][x]
             if v == 1:
