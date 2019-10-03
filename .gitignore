@@ -1,5 +1,6 @@
 
-/.idea/*
+.idea/
+gym_snake/test.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
