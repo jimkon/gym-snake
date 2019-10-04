@@ -43,7 +43,7 @@ class SnakeEnv(gym.Env):
                 or head_x<self.topleft[1] or head_x>=self.bottomright[1]\
                 or self.grid[head_y][head_x] == 1.\
                 or self.current_step>=self.max_steps:
-            return self.grid, -1, True, {}
+            return self.grid.flatten(), -1, True, {}
 
         if self.grid[head_y][head_x] == 2.:
             reward = 1
@@ -59,7 +59,7 @@ class SnakeEnv(gym.Env):
         self.snake_body.appendleft(new_head_yx)
 
         self.current_step += 1
-        return self.grid, reward, False, {}
+        return self.grid.flatten(), reward, False, {}
 
     def reset(self):
         self.grid = np.zeros(self.grid_shape)
@@ -77,7 +77,7 @@ class SnakeEnv(gym.Env):
 
         self.direction_pointer = 2
         self.generate_new_food()
-        return self.grid
+        return self.grid.flatten()
 
     def render(self, mode='human', close=False):
         if self.screen is None:
