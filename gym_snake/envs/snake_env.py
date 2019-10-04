@@ -109,10 +109,10 @@ class SnakeEnv(gym.Env):
         # time.sleep(.333)
 
     def generate_new_food(self):
-        probs = 1-self.grid.flatten()
-        probs /= probs.sum()
-        ind = np.random.choice(len(probs), 1, p=probs)[0]
+        grid_1d = 1-self.grid.flatten()
+        inds = np.where(grid_1d == 0)[0]
+        ind = np.random.choice(inds)
         y, x = ind//self.grid_shape[0], ind%self.grid_shape[0]
-        self.grid[y][x] = 2.
+        # self.grid[y][x] = 2.
 
 
