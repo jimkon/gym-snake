@@ -132,3 +132,4 @@ class SnakeEnv(gym.Env):
         self.grid[ind] = 2.
 
 
+
