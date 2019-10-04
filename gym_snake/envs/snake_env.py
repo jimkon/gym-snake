@@ -108,6 +108,10 @@ class SnakeEnv(gym.Env):
         pygame.display.flip()
         # time.sleep(.333)
 
+    def yx_coords(self, index):
+        y, x = index // self.grid_shape[0], index % self.grid_shape[0]
+        return y, x
+
     def generate_new_food(self):
         probs = 1-self.grid.flatten()
         probs /= probs.sum()
