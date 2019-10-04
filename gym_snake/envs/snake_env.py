@@ -35,7 +35,7 @@ class SnakeEnv(gym.Env):
     def step(self, action):
         action = 1 if action>1 else -1 if action<-1 else action
         # action = max(min(action, 1), -1)
-        self.direction_pointer = (self.direction_pointer+action)%len(self.directions)
+        self.direction_pointer = (self.direction_pointer+action)%4
         self.snake_heading = self.directions[self.direction_pointer]
         head_y, head_x = new_head_yx = self.head_position + self.snake_heading
 
@@ -64,7 +64,7 @@ class SnakeEnv(gym.Env):
     def reset(self):
         self.grid = np.zeros(self.grid_shape)
         self.current_step = 0
-        self.head_position = np.array([5, 10])
+        self.head_position = np.array([5, 5])
         self.direction_pointer = 0
 
         self.snake_heading = self.directions[self.direction_pointer]
@@ -113,6 +113,6 @@ class SnakeEnv(gym.Env):
         inds = np.where(grid_1d == 0)[0]
         ind = np.random.choice(inds)
         y, x = ind//self.grid_shape[0], ind%self.grid_shape[0]
-        # self.grid[y][x] = 2.
+        self.grid[y][x] = 2.
 
 
