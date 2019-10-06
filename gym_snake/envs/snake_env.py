@@ -43,10 +43,15 @@ class SnakeEnv(gym.Env):
         self.direction_pointer = (self.direction_pointer+action)%4
         self.snake_heading = self.directions[self.direction_pointer]
         head_y, head_x = new_head_yx = self.head_position + self.snake_heading
+        if head_y < self.topleft[0] or\
+                head_y >= self.bottomright[0] or\
+                head_x < self.topleft[1] or\
+                head_x >= self.bottomright[1]:
+            return self.grid, -1, True, {}
+
         head_index = self.yx_to_index(head_y, head_x)
-        if head_y<self.topleft[0] or head_y>=self.bottomright[0]\
-                or head_x<self.topleft[1] or head_x>=self.bottomright[1]\
-                or self.grid[head_index] == 1.\
+
+        if self.grid[head_index] == 1.\
                 or self.current_step>=self.max_steps:
             return self.grid, -1, True, {}
 
@@ -115,7 +120,7 @@ class SnakeEnv(gym.Env):
                          pygame.Rect(x*self.rect_width, y*self.rect_height, self.rect_width, self.rect_height))
 
         pygame.display.flip()
-        time.sleep(.333)
+        time.sleep(.166)
 
     def index_to_yx(self, index):
         # y, x = index // self.grid_shape[1], index % self.grid_shape[1]
