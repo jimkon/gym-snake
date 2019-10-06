@@ -1,3 +1,3 @@
 from setuptools import setup
 
-setup(name='snake', version = '0.1', install_requires = ['gym', 'numpy', 'pygame'])
+setup(name='gym_snake', version = '0.1', install_requires = ['gym', 'numpy', 'pygame'])
