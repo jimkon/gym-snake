@@ -47,12 +47,16 @@ class SnakeEnv(gym.Env):
                 head_y >= self.bottomright[0] or\
                 head_x < self.topleft[1] or\
                 head_x >= self.bottomright[1]:
+            tail_y, tail_x = self.snake_body.pop()
+            self.grid[self.yx_to_index(tail_y, tail_x)] = 0.
             return self.grid, -1, True, {}
 
         head_index = self.yx_to_index(head_y, head_x)
 
         if self.grid[head_index] == 1.\
                 or self.current_step>=self.max_steps:
+            tail_y, tail_x = self.snake_body.pop()
+            self.grid[self.yx_to_index(tail_y, tail_x)] = 0.
             return self.grid, -1, True, {}
 
         if self.grid[head_index] == 2.:
